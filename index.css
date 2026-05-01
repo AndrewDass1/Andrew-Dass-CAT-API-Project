@@ -1,0 +1,31 @@
+h1 {
+    font-family: serif;
+}
+
+h2 {
+    font-family: serif;
+}
+
+p {
+    font-family: serif;
+    font-size: 16px;
+}
+
+body {
+    background-color: #7092BE;
+    color: beige;
+    font-family: serif;
+}
+
+#divTagOne {
+    text-align: center;
+}
+
+#buttonInDivTagOne {
+    background-color: silver;
+    color: blue;
+    text-align: center;
+    font-family: serif;
+    font-size: 18px;
+}
+
