@@ -1,0 +1,2 @@
+var dataInDictionary = {"getCatName":"Below is a picture of a Bengal","displayCatImageSrc":"https://cdn2.thecatapi.com/images/Rl39SPjDO.png","urlOfCatImagehref":"https://cdn2.thecatapi.com/images/Rl39SPjDO.png","getCatDescription":"Bengals are a lot of fun to live with, but they're definitely not the cat for everyone, or for first-time cat owners. Extremely intelligent, curious and active, they demand a lot of interaction and woe betide the owner who doesn't provide it.","getCatTemperament":"Alert, Agile, Energetic, Demanding, Intelligent"}
+export { dataInDictionary }
