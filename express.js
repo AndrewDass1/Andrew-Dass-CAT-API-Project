@@ -4,6 +4,8 @@ const port = 3000;
 
 const fs = require('node:fs');
 
+const cron = require('node-cron');
+
 app.use(express.static('public'));
 
 const apiString = "";
@@ -18,94 +20,102 @@ var getCatTemperament;
 
 var variableData = {};
 
-fetch(apiString)
-.then(response => {return response.json()})
-.then( data => 
-    {
-        console.log(data);
-        
-        var catName = data[0].breeds[0].name;
-        console.log(catName);
+// Add express within fetch after getting data from it and enclose this into a function
+function fetchCatInformation(){
+    fetch(apiString)
+    .then(response => {return response.json()})
+    .then( data => 
+        {
+            console.log(data);
+                
+            var catName = data[0].breeds[0].name;
+            console.log(catName);
 
-        // Add title here will display at similar speed to rest of page
+            // Add title here will display at similar speed to rest of page
 
-        // Defines variables here and send over to HTML
+            // Defines variables here and send over to HTML
 
-        // Display cat name above picture
-        if (catName[0] == "A") { 
-            getCatName = "Below is a picture of an " + catName;
+            // Display cat name above picture
+            if (catName[0] == "A") { 
+                getCatName = "Below is a picture of an " + catName;
 
-            variableData["getCatName"] = getCatName;
-        }
-        else if(catName[0] == "E") {
-            getCatName = "Below is a picture of an " + catName;
-
-            variableData["getCatName"] = getCatName;
-        }
-        else if(catName[0] == "I") {
-            getCatName = "Below is a picture of an " + catName;
-
-            variableData["getCatName"] = getCatName;
-        }
-        else if(catName[0] == "O") {
-            getCatName = "Below is a picture of an " + catName;
-            
-            variableData["getCatName"] = getCatName;
-        }
-        else if(catName[0] == "U") {
-            getCatName = "Below is a picture of an " + catName;
-
-            variableData["getCatName"] = getCatName;
-        }
-        else {
-            getCatName = "Below is a picture of a " + catName;
-
-            variableData["getCatName"] = getCatName;
-        }
-
-        // Shows the picture, send this data over
-        displayCatImageSrc = data[0].url;
-
-        
-        variableData["displayCatImageSrc"] = displayCatImageSrc;
-        // console.log(variableData)
-
-        // Image's dimensions are changed directly in HTML file to 500 by 500
-
-        // Click the picture, opens picture in new tab, send this data over
-        urlOfCatImagehref = data[0].url;
-
-        variableData["urlOfCatImagehref"] = urlOfCatImagehref;
-
-        // Show Cat Description, Cat Temperament
-        getCatDescription = data[0].breeds[0].description;
-
-        variableData["getCatDescription"] = getCatDescription;
-
-        getCatTemperament = data[0].breeds[0].temperament;
-
-        variableData["getCatTemperament"] = getCatTemperament;
-        
-        console.log(variableData)
-        strVariableData = ("var dataInDictionary = " + JSON.stringify(variableData) + "\n" + "export { dataInDictionary }");
-        
-        // Sending Data to File:
-        fs.writeFile('./public/dataFile.js', strVariableData, err =>  {
-            if(err) {
-                console.error(err);
+                variableData["getCatName"] = getCatName;
             }
-        });
+            else if(catName[0] == "E") {
+                getCatName = "Below is a picture of an " + catName;
 
+                variableData["getCatName"] = getCatName;
+            }
+            else if(catName[0] == "I") {
+                getCatName = "Below is a picture of an " + catName;
+
+                variableData["getCatName"] = getCatName;
+            }
+            else if(catName[0] == "O") {
+                getCatName = "Below is a picture of an " + catName;
+                    
+                variableData["getCatName"] = getCatName;
+            }
+            else if(catName[0] == "U") {
+                getCatName = "Below is a picture of an " + catName;
+
+                variableData["getCatName"] = getCatName;
+            }
+            else {
+                getCatName = "Below is a picture of a " + catName;
+
+                variableData["getCatName"] = getCatName;
+            }
+
+            // Shows the picture, send this data over
+            displayCatImageSrc = data[0].url;
+
+                
+            variableData["displayCatImageSrc"] = displayCatImageSrc;
+            // console.log(variableData)
+
+            // Image's dimensions are changed directly in HTML file to 500 by 500
+
+            // Click the picture, opens picture in new tab, send this data over
+            urlOfCatImagehref = data[0].url;
+
+            variableData["urlOfCatImagehref"] = urlOfCatImagehref;
+
+            // Show Cat Description, Cat Temperament
+            getCatDescription = data[0].breeds[0].description;
+
+            variableData["getCatDescription"] = getCatDescription;
+
+            getCatTemperament = data[0].breeds[0].temperament;
+
+            variableData["getCatTemperament"] = getCatTemperament;
+                
+            console.log(variableData)
+            strVariableData = ("var dataInDictionary = " + JSON.stringify(variableData) + "\n" + "export { dataInDictionary }");
+                
+            // Sending Data to File:
+            fs.writeFile('./public/dataFile.js', strVariableData, err =>  {
+                if(err) {
+                    console.error(err);
+                }
+            });
+
+        }
+    )
+    .catch(err => console.error(err))
+
+
+    app.listen(port, () => {
+        console.log(`Cat application running on port ${port}`)
+    });
+}
+
+// Run fetchCatInformation function immediately to account for cron's 30 second startup time
+fetchCatInformation();
+
+// Cron takes a minute to start up and runs every 30 seconds afterward to initiate express server and get a new cat picture and info from fetch
+cron.schedule('*/30 * * * * *', () => 
+    {
+        fetchCatInformation();
     }
-)
-.catch(err => console.error(err))
-
-// app.get('/', (req, res) => {
-//     console.log("hello");
-
-//     res.redirect("localhost:3000/index.html")
-// })
-
-app.listen(port, () => {
-  console.log(`Cat application running on port ${port}`)
-});
+);

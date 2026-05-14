@@ -57,4 +57,5 @@ setTimeout( function buttonOnBottomPage() {
     document.body.append(makeDivTag);
 
             // 
-}, 1000)
+}, 30000);
+// Button appears after a minute
