@@ -67,12 +67,14 @@ To download node-cron (4), run the following command:
 To use the cat api, make an account on the cat api website and select the free option to not pay for charges: https://account.thecatapi.com/ (1). After making an account, there should be a header that says "API Keys". Navigate to that page and follow the directions to make a cat API key and this key will be used to retrieve a cat information. Make sure no one else gets ahold of this key. 
 
 ### How the API Key is Modified for this Project
-Also go to the TheCatAPI - Documentation Portal (5), there they explain how to customize the first part of the url for the API link and then add the & sign and then second part of the api link that was generated from the user's account.
+Also go to the TheCatAPI - Documentation Portal (5), there they explain how to customize the first part of the url for the API link and how to add other symbols in the link, including & signs and how to include the second part of the api link that was generated from the user's account.
 
-Example:
-`https://api.thecatapi.com/v1/images/search&"insert_generated_api_key_from_account"`
+By following the CAT api documentation, the url to parse cat information can be modified to obtain certain data about cats. 
 
-Notice in the example `https://api.thecatapi.com/v1/images/search` is from the cat api documentation portal, a `&` is included and lastly the api generated from the account after the `&` sign. 
+**Below shows the API Format used in this project (copy this):**
+
+`https://api.thecatapi.com/v1/images/search?has_breeds=1&api_key=...` <br>
+where ... is inserting api_key generated from user account
 
 ### Inserting the API Key into the Express.js file
 Now, open the express.js file in the root directory. The source code has been uploaded without an api_key and to use this application, the variable called `const apiString` needs to be set to the users cat api key they recently created. Insert the generated cat api key as a string data type and set it equal to const apiString. 

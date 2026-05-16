@@ -104,7 +104,8 @@ function fetchCatInformation(){
     )
     .catch(err => console.error(err))
 
-
+    // Add a delay here to prevent permissions policy violation: unload. HTML is taking too long to get data from .js and therefore console error occurs
+    
     app.listen(port, () => {
         console.log(`Cat application running on port ${port}`)
     });
